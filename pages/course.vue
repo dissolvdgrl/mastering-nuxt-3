@@ -1,5 +1,4 @@
 <template>
-  <div class="p-12 bg-blue-500 w-full h-full min-h-screen flex flex-col items-center">
     <div class="prose mb-12">
       <h1>
         <span class="font-medium">Course: </span>
@@ -31,9 +30,9 @@
         <NuxtPage/>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
 const { chapters } = useCourse();
+
 </script>
