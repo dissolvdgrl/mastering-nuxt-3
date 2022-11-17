@@ -34,6 +34,37 @@
   const course = useCourse();
   const route = useRoute();
 
+  definePageMeta({
+    validate({ params }) {
+      // This is a compiler macro, so we cannot access
+      // course outside the scope of this macro
+      const course = useCourse();
+      const chapter = course.chapters.find(
+          (chapter) => chapter.slug === params.chapterSlug
+      );
+
+      if (!chapter) {
+        return createError({
+          statusCode: 404,
+          message: 'Chapter not found',
+        });
+      }
+
+      const lesson = chapter.lessons.find(
+          (lesson) => lesson.slug === params.lessonSlug
+      );
+
+      if (!lesson) {
+        return createError({
+          statusCode: 404,
+          message: 'Lesson not found',
+        });
+      }
+
+      return true;
+    },
+  });
+
 /*
 Error handling example
 if (route.params.lessonSlug === '3-typing-component-events') {
@@ -46,25 +77,11 @@ if (route.params.lessonSlug === '3-typing-component-events') {
     );
   });
 
-  if (!chapter.value) {
-    throw createError({
-      statusCode: 404,
-      message: 'Chapter not found',
-    });
-  }
-
   const lesson = computed(() => {
     return chapter.value.lessons.find(
         (lesson) => lesson.slug === route.params.lessonSlug
     );
   });
-
-  if (!lesson.value) {
-    throw createError({
-      statusCode: 404,
-      message: 'Lesson not found',
-    });
-  }
 
   const title = computed(() => {
     return `${lesson.value.title} - ${course.title}`;
