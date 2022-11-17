@@ -15,6 +15,7 @@ type Chapter = {
   slug: string;
   number: number;
   lessons: Lesson[];
+  path: string;
 };
 
 type Course = {
