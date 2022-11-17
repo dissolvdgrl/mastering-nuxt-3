@@ -34,9 +34,11 @@
   const course = useCourse();
   const route = useRoute();
 
-  if (route.params.lessonSlug === '3-typing-component-events') {
+/*
+Error handling example
+if (route.params.lessonSlug === '3-typing-component-events') {
     console.log(route.params.paramthatdoesnotexistwhoops.capitalizeIsNotAMethod());
-  };
+};*/
 
   const chapter = computed(() => {
     return course.chapters.find(
@@ -44,11 +46,25 @@
     );
   });
 
+  if (!chapter.value) {
+    throw createError({
+      statusCode: 404,
+      message: 'Chapter not found',
+    });
+  }
+
   const lesson = computed(() => {
     return chapter.value.lessons.find(
         (lesson) => lesson.slug === route.params.lessonSlug
     );
   });
+
+  if (!lesson.value) {
+    throw createError({
+      statusCode: 404,
+      message: 'Lesson not found',
+    });
+  }
 
   const title = computed(() => {
     return `${lesson.value.title} - ${course.title}`;
