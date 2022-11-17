@@ -25,7 +25,7 @@
     <p>{{ lesson.text }}</p>
         <LessonCompleteButton
             :model-value="isLessonComplete"
-            @update:model-value="toggleComplete"
+            @update:model-value="throw createError('Could not update');"
         />
   </div>
 </template>
@@ -33,6 +33,10 @@
 <script setup>
   const course = useCourse();
   const route = useRoute();
+
+  if (route.params.lessonSlug === '3-typing-component-events') {
+    console.log(route.params.paramthatdoesnotexistwhoops.capitalizeIsNotAMethod());
+  };
 
   const chapter = computed(() => {
     return course.chapters.find(
