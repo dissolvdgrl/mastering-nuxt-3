@@ -51,8 +51,11 @@
 <script setup>
 const { chapters } = useCourse();
 
-const resetError = (error) => {
-  error.value = null;
+const resetError = async (error) => {
+  throw createError({
+    fatal: true,
+    message: 'Fatal error',
+  });
 };
 
 </script>
