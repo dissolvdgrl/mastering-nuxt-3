@@ -1,8 +1,10 @@
 <template>
+  <div>
     <div class="prose mb-12">
       <h1>
-        <span class="font-medium">Course: </span>
-        <span class="font-bold">Mastering Nuxt</span>
+        <span class="font-medium">
+          <span class="font-bold">{{ title }}</span>
+        </span>
       </h1>
     </div>
     <div class="flex flex-row justify-center flex-grow">
@@ -46,10 +48,11 @@
         </NuxtErrorBoundary>
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-const { chapters } = useCourse();
+const { chapters, title } = useCourse();
 
 const resetError = async (error) => {
   throw createError({
