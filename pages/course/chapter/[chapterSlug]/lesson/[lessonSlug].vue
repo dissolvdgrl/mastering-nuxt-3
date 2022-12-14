@@ -31,18 +31,41 @@
 </template>
 
 <script setup>
-  const course = useCourse();
+  const course = await useCourse();
   const route = useRoute();
+  const { chapterSlug, lessonSlug } = route.params;
+  const lesson = await useLesson(chapterSlug, lessonSlug);
 
   // definePageMeta is a compiler macro
   definePageMeta({
-    // middleware: function (to, from) {... }
-    middleware: [
-		function ({ params }, from) {
-			const course = useCourse();
-		},
-		'auth'
-    ],
+	  middleware: [
+		  async function ({ params }, from) {
+			  const course = await useCourse();
+			  const chapter = course.value.chapters.find(
+				  (chapter) => chapter.slug === params.chapterSlug
+			  );
+			  if (!chapter) {
+				  return abortNavigation(
+					  createError({
+						  statusCode: 404,
+						  message: 'Chapter not found',
+					  })
+				  );
+			  }
+			  const lesson = chapter.lessons.find(
+				  (lesson) => lesson.slug === params.lessonSlug
+			  );
+			  if (!lesson) {
+				  return abortNavigation(
+					  createError({
+						  statusCode: 404,
+						  message: 'Lesson not found',
+					  })
+				  );
+			  }
+		  },
+		  'auth',
+	  ],
   });
 
 /*
@@ -52,19 +75,13 @@ if (route.params.lessonSlug === '3-typing-component-events') {
 };*/
 
   const chapter = computed(() => {
-    return course.chapters.find(
+    return course.value.chapters.find(
         (chapter) => chapter.slug === route.params.chapterSlug
     );
   });
 
-  const lesson = computed(() => {
-    return chapter.value.lessons.find(
-        (lesson) => lesson.slug === route.params.lessonSlug
-    );
-  });
-
   const title = computed(() => {
-    return `${lesson.value.title} - ${course.title}`;
+    return `${lesson.value.title} - ${course.value.title}`;
   })
 
   useHead({
