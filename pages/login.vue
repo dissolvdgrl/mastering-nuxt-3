@@ -5,6 +5,7 @@
   </div>
 </template>
 
+<!--suppress SpellCheckingInspection -->
 <script setup lang="ts">
 const course = await useCourse();
 const { query } = useRoute();

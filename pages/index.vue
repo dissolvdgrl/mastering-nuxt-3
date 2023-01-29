@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     class="underline font-medium"
-    :href="firstLesson.path">
+    :href="firstLesson">
     Go to first lesson
   </NuxtLink>
 </template>
