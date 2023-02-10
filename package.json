@@ -1,7 +1,7 @@
 {
   "private": true,
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.mjs"
   },
   "scripts": {
     "build": "nuxt build",
@@ -12,13 +12,13 @@
   "devDependencies": {
     "@nuxtjs/supabase": "^0.3.0",
     "@nuxtjs/tailwindcss": "^6.3.0",
+    "@pinia/nuxt": "^0.4.6",
+    "@prisma/client": "^4.9.0",
     "@tailwindcss/typography": "^0.5.4",
     "@vueuse/core": "^9.4.0",
     "@vueuse/nuxt": "^9.4.0",
-    "nuxt": "^3.1.1",
+    "nuxt": "^3.1.2",
+    "pinia": "^2.0.30",
     "prisma": "^4.8.0"
-  },
-  "dependencies": {
-    "@prisma/client": "^4.8.0"
   }
 }
